@@ -16,6 +16,7 @@ logs
 
 # Ignore test coverage reports
 coverage
+sessions
 
 # Ignore other unnecessary files
 .DS_Store

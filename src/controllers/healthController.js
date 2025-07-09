@@ -18,6 +18,7 @@ const ping = async (req, res) => {
     #swagger.tags = ['Various']
   */
   try {
+    console.log('On PING !')
     res.json({ success: true, message: 'pong' })
   } catch (error) {
     sendErrorResponse(res, 500, error.message)

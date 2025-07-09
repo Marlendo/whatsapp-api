@@ -2,14 +2,48 @@ const axios = require('axios')
 const { globalApiKey, disabledCallbacks } = require('./config')
 
 // Trigger webhook endpoint
-const triggerWebhook = (webhookURL, sessionId, dataType, data) => {
-  axios.post(webhookURL, { dataType, data, sessionId }, { headers: { 'x-api-key': globalApiKey } })
-    .catch(error => console.error('Failed to send new message webhook:', sessionId, dataType, error.message, data || ''))
+const triggerWebhook = async (webhookURL, sessionId, dataType, data) => {
+  try {
+    console.log('[WEBHOOK] Sending webhook...')
+    console.log('[WEBHOOK] URL:', webhookURL)
+    console.log('[WEBHOOK] Payload:', { sessionId, dataType, data: JSON.stringify(data) })
+
+    const response = await axios.post(
+      webhookURL,
+      { dataType, data, sessionId },
+      {
+        headers: {
+          'x-api-key': globalApiKey
+        }
+      }
+    )
+
+    console.log('[WEBHOOK] Success')
+    console.log('[WEBHOOK] Status:', response.status)
+    console.log('[WEBHOOK] Response:', response.data)
+  } catch (error) {
+    console.log('[WEBHOOK] Failed to send webhook')
+
+    if (error instanceof Error) {
+      console.log('[WEBHOOK] Error Name:', error.name)
+      console.log('[WEBHOOK] Error Message:', error.message)
+      console.log('[WEBHOOK] Stack:', error.stack)
+    } else {
+      console.log('[WEBHOOK] Unknown Error:', error)
+    }
+
+    if (error.response) {
+      console.log('[WEBHOOK] Response Status:', error.response.status)
+      console.log('[WEBHOOK] Response Data:', error.response.data)
+    } else {
+      console.log('[WEBHOOK] Error Config:', error.config)
+    }
+  }
 }
 
 // Function to send a response with error status and message
-const sendErrorResponse = (res, status, message) => {
-  res.status(status).json({ success: false, error: message })
+const sendErrorResponse = (res, _status, message) => {
+  res.status(200).json({ success: false, error: message })
 }
 
 // Function to wait for a specific item not to be null

@@ -7,10 +7,10 @@
     "start": "node server.js",
     "test": "jest --runInBand",
     "swagger": "node swagger.js",
-    "deploy": "docker compose -f ./docker-compose.yml pull && docker compose -f ./docker-compose.yml up -d"
+    "deploy": "docker compose -f ./docker-compose.yml down && docker compose -f ./docker-compose.yml up --build --force-recreate -d"
   },
   "dependencies": {
-    "axios": "^1.7.7",
+    "axios": "^1.10.0",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "express-rate-limit": "^6.11.2",
