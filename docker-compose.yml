@@ -1,9 +1,10 @@
 services:
   whatsapp_web_api:
-    image: chrishubert/whatsapp-web-api:latest
+    build: .
+    # image: chrishubert/whatsapp-web-api:latest
     restart: always
     ports:
-      - "3000:3000"
+      - "8099:3000"
     environment:
       # - API_KEY=d9jgussXvKF566QFjq97  # OPTIONAL
       - BASE_WEBHOOK_URL=http://n8n:5678/webhook/fb38f465-fc47-4c25-bcef-903595d84c20
