@@ -73,13 +73,23 @@ const sendMessage = async (req, res) => {
     let messageOut
     switch (contentType) {
       case 'string':
+        // eslint-disable-next-line no-case-declarations
+        let contentStr = content
         if (options?.media) {
           const media = options.media
           media.filename = null
           media.filesize = null
           options.media = new MessageMedia(media.mimetype, media.data, media.filename, media.filesize)
         }
-        messageOut = await client.sendMessage(chatId, content, options)
+        if (options?.isBase64 && typeof content === 'string') {
+          try {
+            contentStr = Buffer.from(content, 'base64').toString('utf-8')
+          } catch (e) {
+            console.log('Gagal decode base64:', e.message)
+            contentStr = '[Pesan gagal didecode]'
+          }
+        }
+        messageOut = await client.sendMessage(chatId, contentStr, options)
         break
       case 'MessageMediaFromURL': {
         const messageMediaFromURL = await MessageMedia.fromUrl(content, { unsafeMime: true })
