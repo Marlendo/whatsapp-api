@@ -1,13 +1,15 @@
-# Use the official Node.js Alpine image as the base image
-FROM node:20-alpine
+# Gunakan Bun Alpine image
+FROM oven/bun:latest-alpine
 
-# Set the working directory
+# Set working directory
 WORKDIR /usr/src/app
 
-# Install Chromium
+# Set environment (buat Puppeteer)
 ENV CHROME_BIN="/usr/bin/chromium-browser" \
     PUPPETEER_SKIP_CHROMIUM_DOWNLOAD="true" \
     NODE_ENV="production"
+
+# Install Chromium & font
 RUN set -x \
     && apk update \
     && apk upgrade \
@@ -16,17 +18,17 @@ RUN set -x \
     ttf-freefont \
     chromium
 
-# Copy package.json and package-lock.json to the working directory
-COPY package*.json ./
+# Copy package.json dan bun.lockb
+COPY package.json bun.lockb ./
 
-# Install the dependencies
-RUN npm ci --only=production --ignore-scripts
+# Install dependencies pake Bun
+RUN bun install --production
 
-# Copy the rest of the source code to the working directory
+# Copy semua source code
 COPY . .
 
-# Expose the port the API will run on
+# Buka port
 EXPOSE 3000
 
-# Start the API
-CMD ["npm", "start"]
+# Jalanin server.js pake Bun
+CMD ["bun", "server.js"]

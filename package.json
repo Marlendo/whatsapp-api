@@ -4,9 +4,9 @@
   "description": "REST API wrapper for whatsapp-web.js",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "bun server.js",
     "test": "jest --runInBand",
-    "swagger": "node swagger.js",
+    "swagger": "bun swagger.js",
     "deploy": "docker compose -f ./docker-compose.yml down && docker compose -f ./docker-compose.yml up --build --force-recreate -d"
   },
   "dependencies": {
@@ -40,9 +40,6 @@
   ],
   "author": "Christophe Hubert",
   "license": "MIT",
-  "engines": {
-    "node": ">=14.17.0"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/chrishubert/whatsapp-web-api.git"
