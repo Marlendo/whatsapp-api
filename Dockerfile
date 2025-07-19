@@ -18,8 +18,8 @@ RUN set -x \
     ttf-freefont \
     chromium
 
-# Copy package.json dan bun.lockb
-COPY package.json bun.lockb ./
+# Copy package.json dan bun.lock
+COPY package.json bun.lock ./
 
 # Install dependencies pake Bun
 RUN bun install --production
