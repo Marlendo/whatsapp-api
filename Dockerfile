@@ -1,5 +1,5 @@
 # Gunakan Bun Alpine image
-FROM oven/bun:latest-alpine
+FROM oven/bun:1.2.18-alpine
 
 # Set working directory
 WORKDIR /usr/src/app
